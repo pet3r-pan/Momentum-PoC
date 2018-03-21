@@ -14,10 +14,10 @@ How to run the Poc:
 	
 	e) terminal 5: your Friend3 also running Momentun (and this guy will receive a piece of your secret)
 
-2) in terminal 2 run: python Momentun.py 3001
-3) in terminal 3 run: python Momentun.py 3002
-4) in terminal 4 run: python Momentun.py 3003
-5) in terminal 5 run: python Momentun.py 3004
+2) in terminal 2 run: python Momentum.py 3001
+3) in terminal 3 run: python Momentum.py 3002
+4) in terminal 4 run: python Momentum.py 3003
+5) in terminal 5 run: python Momentum.py 3004
 6) in terminal 1 run: python user.py
 7) terminal 1:
 
