@@ -19,7 +19,6 @@ def fixPass(passwd):
         while(diff < passSize):
             passwd = passwd + '*'
             diff = len(passwd)
-    print str(len(passwd))
     return passwd
 
 def unfixPass(passwd):
