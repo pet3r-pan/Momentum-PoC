@@ -86,12 +86,15 @@ def retrieveMySecret():
     pieceVet = pieces.split(',')
     pieceVet = map(int, pieceVet)
     secretReceived = []
-    for i in range(0, len(pieceVet)):
-        secretReceived.append(getShamirPiece(tanVet[i].strip(), usr, pieceVet[i]).encode('utf8'))
+    try:
+        for i in range(0, len(pieceVet)):
+            secretReceived.append(getShamirPiece(tanVet[i].strip(), usr, pieceVet[i]).encode('utf8'))
 
-    plainSecret = PlaintextToHexSecretSharer.recover_secret(secretReceived)
-    strRet = '''{"secret" : "''' + plainSecret + '''"} '''
-    return strRet
+        plainSecret = PlaintextToHexSecretSharer.recover_secret(secretReceived)
+        strRet = '''{"secret" : "''' + plainSecret + '''"} '''
+        return strRet
+    except:
+        return '''{"secret" : "Impossible  to retrieve"} '''
 
 
 def getShamirPiece(tan, usr, friendId):
@@ -99,12 +102,16 @@ def getShamirPiece(tan, usr, friendId):
     url = "http://localhost:300" + str(friendId) + "/getSecret"
     data = '''{"user" : "''' + usr + '''", "tan" : "'''+tan+'''"} '''
     resp = requests.post(url, data=data, headers={'content-type':'application/json'})
-    cont = resp.content
-    dict = json.loads(cont)
-    if(dict['secret']):
-        return dict['secret']
-    else:
-        return ''
+    try:
+        cont = resp.content
+        dict = json.loads(cont)
+        if (dict['secret']):
+            return dict['secret']
+        else:
+            return ''
+    except:
+        return "failed"
+
 
 def sendShamirPieces(pieceArray):
     url1 = friend1Addr + "setSecret"
