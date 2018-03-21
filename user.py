@@ -57,8 +57,8 @@ def saveSecret():
 
 def recoverySecret():
     usr = raw_input('Username: ')
-    tan = raw_input('Authenticator: ')
     pieces = raw_input('Which friends to retrieve the piece[comma separated: ex: 1, 3, 4]: ')
+    tan = raw_input('Authenticator of each friend [comma separated]: ')
     url = server + "/retrieveMySecret"
     data = '''{"user" : "''' + usr + '''", "tan" : "''' + tan + '''", "pieces" : "''' + pieces + '''"} '''
     resp = requests.post(url, data=data, headers={'content-type': 'application/json'})

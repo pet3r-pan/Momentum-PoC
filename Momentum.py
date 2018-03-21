@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 passwd = ""
 friendSecret = ""
+friendTan = ""
 
 friend1Addr = "http://localhost:3002/"
 friend2Addr = "http://localhost:3003/"
@@ -46,8 +47,11 @@ def doShammir():
 def setSecret():
     content = request.get_json()
     global friendSecret
+    global friendTan
+    friendTan = str(random.randint(1000, 9000))
     friendSecret = content['secret']
     print "received "+friendSecret
+    print "My Authenticator code is:"+friendTan
     return "ok"''
 
 
@@ -55,13 +59,20 @@ def setSecret():
 def getSecret():
     content = request.get_json()
     global friendSecret
+    global friendTan
     tan = content['tan']
     usr = content['user']
     print ("the user: "+usr+" is requesting his secret")
-    # request.data['secret'] = friendSecret
-    #return friendSecret
-    strRet = '''{"secret" : "''' + friendSecret + '''"} '''
-    return strRet
+    if(tan == friendTan):
+        # request.data['secret'] = friendSecret
+        #return friendSecret
+        strRet = '''{"secret" : "''' + friendSecret + '''"} '''
+        return strRet
+    else:
+        print (tan)
+        print (friendTan)
+        print("Invalid Authenticator!!!!")
+        return ''
 
 
 @app.route('/retrieveMySecret', methods=['POST'])
@@ -69,13 +80,14 @@ def retrieveMySecret():
     content = request.get_json()
     global friendSecret
     tan = content['tan']
+    tanVet = tan.split(',')
     usr = content['user']
     pieces = content['pieces']
     pieceVet = pieces.split(',')
     pieceVet = map(int, pieceVet)
     secretReceived = []
     for i in range(0, len(pieceVet)):
-        secretReceived.append(getShamirPiece(tan, usr, pieceVet[i]).encode('utf8'))
+        secretReceived.append(getShamirPiece(tanVet[i].strip(), usr, pieceVet[i]).encode('utf8'))
 
     plainSecret = PlaintextToHexSecretSharer.recover_secret(secretReceived)
     strRet = '''{"secret" : "''' + plainSecret + '''"} '''
@@ -89,8 +101,10 @@ def getShamirPiece(tan, usr, friendId):
     resp = requests.post(url, data=data, headers={'content-type':'application/json'})
     cont = resp.content
     dict = json.loads(cont)
-    return dict['secret']
-
+    if(dict['secret']):
+        return dict['secret']
+    else:
+        return ''
 
 def sendShamirPieces(pieceArray):
     url1 = friend1Addr + "setSecret"
