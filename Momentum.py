@@ -27,8 +27,8 @@ def login():
     passwd = content['passw']
     print("user:"+user+" pass:"+passwd)
     #encrypt_file("1234567890123456", "keys.txt")
-    decrypt_file(passwd, "keys.txt.enc", "keys.or.txt")
-    f = open("keys.or.txt","r")
+    decrypt_file(passwd, "keys.txt.enc", "keys.txt")
+    f = open("keys.txt","r")
     print f.read()
     return "ok"
 
