@@ -215,7 +215,7 @@ def startServer(porta=8080):
 if __name__ == '__main__':
     if len(sys.argv[1:]) < 1:
         print ("Command Line usage:")
-        print ("    python Momentum.py port")
+        print ("    python Momentun.py port")
         quit()
     os.system("clear")
     main()

@@ -9,7 +9,7 @@ from Crypto.Cipher import AES
 
 passSize = 32
 
-server = "http://localhost:3001"
+server = "http://localhost:8080"
 
 def fixPass(passwd):
     if(len(passwd)<passSize):
