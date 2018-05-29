@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 passwd = ""
 friendSecret = ""
-friendTan = ""
+friendTan = str(random.randint(1000, 9000))
 
 friend1Addr = "http://localhost:3002/"
 friend2Addr = "http://localhost:3003/"
@@ -48,7 +48,7 @@ def setSecret():
     content = request.get_json()
     global friendSecret
     global friendTan
-    friendTan = str(random.randint(1000, 9000))
+    #friendTan = str(random.randint(1000, 9000))
     friendSecret = content['secret']
     print "received "+friendSecret
     print "My Authenticator code is:"+friendTan
@@ -96,6 +96,13 @@ def retrieveMySecret():
     except:
         return '''{"secret" : "Impossible  to retrieve"} '''
 
+
+@app.route('/getAuthenticator', methods=['GET'])
+def getAuthenticator():
+    global friendTan
+    print "Sending the authenticator code to UI: "+friendTan
+    return friendTan
+    
 
 def getShamirPiece(tan, usr, friendId):
     friendId = friendId + 1
