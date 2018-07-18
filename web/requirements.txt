@@ -1,0 +1,4 @@
+Flask==0.10.1
+pycrypto >= 2.6
+requests>=2.2.1
+utilitybelt>=0.2.6
