@@ -15,9 +15,9 @@ passwd = ""
 friendSecret = ""
 friendTan = str(random.randint(1000, 9000))
 
-friend1Addr = "http://localhost:3002/"
-friend2Addr = "http://localhost:3003/"
-friend3Addr = "http://localhost:3004/"
+friend1Addr = "http://127.0.0.1:3002/"
+friend2Addr = "http://127.0.0.1:3003/"
+friend3Addr = "http://127.0.0.1:3004/"
 
 @app.route('/login', methods=['POST'])
 def login():

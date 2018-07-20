@@ -1,6 +1,6 @@
 web:
   build: ./web
   ports:
-    - "3001:3001"
+    - "3002-3004:3001"
   volumes:
     - .:/code
